@@ -14,7 +14,7 @@ istream & operator >> (istream & stream, Alumno & p){
 	stream.read(p.nombre, 11);		
 	stream.read(p.apellidos, 20);		
 	stream.read(p.carrera, 15);
-    stream.get(); // read \n	
+    	stream.get(); // read \n	
 	return stream;
 }
 

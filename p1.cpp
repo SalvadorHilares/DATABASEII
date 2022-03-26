@@ -10,14 +10,14 @@ struct Alumno{
     char carrera [15];
 };
 
-istream & operator>> (istream & stream, Alumno & record){
-    stream.read(record.codigo, 5);
-    stream.read(record.nombre, 11);
-    stream.read(record.apellidos, 20);
-    stream.read(record.carrera, 15);
-    stream.get(); //read \n
-    stream.get();
-    return stream;
+istream & operator >> (istream & stream, Alumno & p){	
+	stream.read(p.codigo, 5);		
+	stream.read(p.nombre, 11);		
+	stream.read(p.apellidos, 20);		
+	stream.read(p.carrera, 15);
+  stream.get(); // read \n	
+  stream.get(); // read \r
+	return stream;
 }
 
 class FixedRecord{
@@ -28,16 +28,16 @@ class FixedRecord{
             this->name = name;
         }
         vector<Alumno> load(){
-
+            //TODO: INGRESAR CODIGO
             ifstream archivo;
-            archivo.open(name, ios::in | ios::app);
-
+            archivo.open(name);
+          
             vector<Alumno> alumnos;
-            Alumno alumno;
             
-            while(archivo){
-                archivo >> alumno;
-                alumnos.push_back(alumno);
+            Alumno alumno;
+            while(!archivo.eof()){
+              archivo >> alumno;
+              alumnos.push_back(alumno);
             }
             archivo.close();
             return alumnos;      
@@ -54,6 +54,32 @@ class FixedRecord{
 int main(){
     class FixedRecord record("datos1.txt");
     vector<Alumno> alumnos = record.load();
-    cout<<alumnos.size()<<endl;
+    string codigoA = "", nombreA = "", apellidoA = "", carreraA = "", vacio = "";
+    for(int i=0; i<alumnos.size(); i++){
+      cout<<"ALUMNO NUMERO "<<i+1<<endl;
+      cout<<"-------------------------\n\n";
+      for(int j=0; j<5; j++){
+        codigoA = codigoA + alumnos[i].codigo[j];
+      }
+      for(int z=0; z<11; z++){
+        nombreA = nombreA + alumnos[i].nombre[z];
+      }
+      for(int k=0; k<20; k++){
+        apellidoA = apellidoA + alumnos[i].apellidos[k];
+      }
+      for(int x=0; x<15; x++){
+        carreraA = carreraA + alumnos[i].carrera[x];
+      }
+      cout<<"Codigo: "<<codigoA<<endl;
+      cout<<"Nombre: "<<nombreA<<endl;
+      cout<<"Apellidos: "<<apellidoA<<endl;
+      cout<<"Carrera: "<<carreraA<<endl;
+
+      cout<<endl;
+      codigoA = vacio;
+      nombreA = vacio;
+      apellidoA = vacio;
+      carreraA = vacio;
+    }
     return 0;
 }

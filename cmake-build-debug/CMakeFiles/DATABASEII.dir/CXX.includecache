@@ -7,6 +7,8 @@
 #IncludeRegexTransform: 
 
 C:/Users/rodri/OneDrive/Documentos/GitHub/DATABASEII/p1.cpp
+fstream
+-
 iostream
 -
 vector

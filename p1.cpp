@@ -30,28 +30,47 @@ ostream &operator<<(ostream &stream, Alumno &p) {
 }
 
 
-void readFromConsole(char buffer[], int size){
-	    string temp;			
-	    cin >> temp;
-	    for(int i=0; i<size; i++)		
-		    buffer[i] = (i < temp.size())? temp[i] : ' ';
-	    buffer[size-1] = '\0';
-	    cin.clear();
-    }
-
-
 Alumno initRecord() {
     // TODO: crear alumno desde teclado
     Alumno alumno;
     string agregado;
-    readFromConsole(alumno.codigo,6);
-    readFromConsole(alumno.nombre,12);
-    readFromConsole(alumno.apellidos,21);
-    readFromConsole(alumno.carrera,16);
+
+    cin >> agregado;
+
+    for (int i = 0; i < 5; i++) {
+      if(i<agregado.size())
+        alumno.codigo[i] = agregado[i];
+      else
+        alumno.codigo[i] = ' ';
+    }
+    agregado.clear();
+    cin>>agregado;
+    for (int i = 0; i < 11; i++) {
+      if(i<agregado.size())
+        alumno.nombre[i] = agregado[i];
+      else
+        alumno.nombre[i] = ' ';
+    }
+    agregado.clear();
+    string agregado1;
+    cin>>agregado>>agregado1;
+    string total = agregado+" "+agregado1;
+    for (int i = 0; i < 20; i++) {
+      if(i<total.size())
+        alumno.apellidos[i] = total[i];
+      else
+        alumno.apellidos[i] = ' ';;
+    }
+    agregado.clear();
+    cin>>agregado;
+    for (int i = 0; i < 15; i++) {
+      if(i<agregado.size())
+        alumno.carrera[i] = agregado[i];
+      else
+        alumno.carrera[i] = ' ';
+    }
     return alumno;
   }
-
-
 
 class FixedRecord {
 private:

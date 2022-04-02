@@ -73,8 +73,8 @@ public:
     FixedRecordFile(string file_name){
         this->file_name = file_name;
         head = -1;
-        ofstream file(this->file_name, ios::app | ios::binary);
-        file.write((char*)&head,sizeof(int));        
+        //ofstream file(this->file_name, ios::app | ios::binary);
+        //file.write((char*)&head,sizeof(int));        
     } 
 
     void writeRecord(Alumno record){ // ADD
@@ -136,24 +136,23 @@ public:
     }
 
     bool Delete(int pos){
-        //OBTENER EL REGISTRO DEL DATO A ELIMINAR
-        
-        Alumno record = readRecord(pos);
+    std::fstream file(file_name, std::ios::in | std::ios::out | std::ios::binary);
 
-        //SETEAMOS VALORES DEL NEXTDEAL
+    int k{};
+    file.read(reinterpret_cast<char *>(&k), sizeof(int));
+    file.seekg(pos * sizeof(Alumno) + sizeof(int), std::ios::beg);
+    Alumno del{};
+    file.read(reinterpret_cast<char *>(&del), sizeof(Alumno));
+    if (del.getNextDel() != -1) return false;
 
-        if(record.getNextDel() == -1 || num_records()/pos==0) return false;
+    file.seekp(0, std::ios::beg);
+    file.write(reinterpret_cast<char *>(&pos), sizeof(int));
+    file.seekp(pos * sizeof(Alumno) + sizeof(int), std::ios::beg);
+    del.setNextDel(k);
+    file.write(reinterpret_cast<char *>(&del), sizeof(Alumno));
 
-        if(head == -1){
-            head = pos;
-            record.setNextDel(-1);
-        }else{
-            int temp = head;
-            head = pos;
-            record.setNextDel(temp);
-        }
-        writeRecord(record,pos);
-        return true;
+    file.close();
+    return true;
     }
 };
 

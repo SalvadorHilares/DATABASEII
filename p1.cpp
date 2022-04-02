@@ -141,5 +141,6 @@ int main() {
   print(alumnos);
   Alumno Record = initRecord();
   record->add(Record);
+  print(alumnos);
   return 0;
 }

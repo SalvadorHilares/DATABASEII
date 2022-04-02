@@ -20,6 +20,7 @@ istream &operator>>(istream &stream, Alumno &p) {
 }
 
 ostream &operator<<(ostream &stream, Alumno &p) {
+  stream << "\n";
   stream.write(p.codigo, 5);
   stream.write(p.nombre, 11);
   stream.write(p.apellidos, 20);
